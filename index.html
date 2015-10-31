@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <title>bitASM Boilerplate</title>
+
+    <link rel="stylesheet" href="/styles/bit.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <script type="text/javascript" src="/app/db.js"></script>
+    <script type="text/javascript" src="/app/bitasm.js"></script>
+
+    <script>
+        ASMBOOT = function(){
+            //This will run on media loaded
+        }
+        ONSCR = function(){
+            //This will run every time screen is changed
+        }
+    </script>
+    <!--======================== MAPPING ==============================
+
+        Screens 0x0:
+            SCREEN          0       |   0x00000000
+            INDEX           1       |   0x00000001
+
+        Shared Elements 0x1:
+
+        Templates 0x2:
+
+        Sound 0x3:
+
+        =============================================================== -->
+
+</head>
+<body>
+    <div class="screen" id="addr0x00000000">
+        <div class="intro-loader center">
+            <img src="/images/loader.gif" width="96" height="96" />
+        </div>
+        <h1 id="loading-state">Loading...</h1>
+    </div>
+    <div class="memory">
+        <!-- Screens (0x0)      -->
+            <div class="scr-index" id="addr0x00000001">
+                Hello world!
+            </div>
+        <!-- /Screens           -->
+
+        <!-- Shareds (0x1)      -->
+        <!-- /Shareds           -->
+
+        <!-- Templates (0x2)    -->
+        <!-- / Templates        -->
+
+        <!-- Sounds (0x3)       -->
+        <!-- /Sounds            -->
+     </div>
+</body>
+</html>
