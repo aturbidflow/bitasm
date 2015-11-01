@@ -47,10 +47,10 @@ String.prototype.matchAll = function(regexp) {
     //COLLECTIONS
         previousScreen = [1],
         sysSoundsCollection = [
-            '/assets/sounds/info.mp3',
-            '/assets/sounds/warning.mp3',
-            '/assets/sounds/error.mp3',
-            '/assets/sounds/critical.mp3'
+            '/sounds/info.mp3',
+            '/sounds/warning.mp3',
+            '/sounds/error.mp3',
+            '/sounds/critical.mp3'
             ],
         systemSounds = [],
         systemErrors = [
