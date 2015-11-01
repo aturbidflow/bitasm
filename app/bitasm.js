@@ -5,7 +5,7 @@
  *
  * @file BITASM Framework
  * @author Artem Flo
- * @version 0.1.042
+ * @version 0.1.045
  *
  */
 
