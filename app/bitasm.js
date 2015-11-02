@@ -77,8 +77,8 @@ String.prototype.matchAll = function(regexp) {
         systemMessages = [
             '<a href="javascript:ALRT.hide()" class="button alert-button">Ok</a>',
             '<a href="javascript:ALRT.hide()" class="button alert-button">Close</a>',
-            'You may have to restart the application and contact administrator by %put your email here%. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
-            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to %put your email here%',
+            'You may have to restart the application and contact administrator by hello@artfield.me. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
+            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to hello@artfield.me',
         ],
     //OBJECTS
         sysAlert = EL('div');
@@ -868,7 +868,9 @@ String.prototype.matchAll = function(regexp) {
     }
 
     function ERR(code,data){
-        ERRSHW(ERRTYPE(new ERROBJ(code.toString(),data)))
+        if (document.body.className.indexOf('critical') < 0){
+            ERRSHW(ERRTYPE(new ERROBJ(code.toString(),data)))
+        }
     }
 
     function ERROBJ(code,data){
@@ -901,6 +903,7 @@ String.prototype.matchAll = function(regexp) {
     function ERRFTL(err){
         $screen.style.backgroundColor = err.bg
         $screen.innerHTML = err.msg()
+        document.body.className = document.body.className + ' critical'
         SYSSND(err.state)
         HALT = true
     }
@@ -935,10 +938,8 @@ String.prototype.matchAll = function(regexp) {
     }
 
     function DEFERR(err){
-        var errd = MEM(ADR(err.data,'9'));
-        if (!errd){
-            return ERRUNK(err)
-        } else {
+        var errd = MEM(ADR(err.code,'9'));
+        if (errd){
             return ERRDEF(errd,err)
         }
     }
