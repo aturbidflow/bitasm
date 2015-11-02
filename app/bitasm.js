@@ -77,8 +77,8 @@ String.prototype.matchAll = function(regexp) {
         systemMessages = [
             '<a href="javascript:ALRT.hide()" class="button alert-button">Ok</a>',
             '<a href="javascript:ALRT.hide()" class="button alert-button">Close</a>',
-            'You may have to restart the application and contact administrator by artem@nw-lab.com. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
-            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to artem@nw-lab.com',
+            'You may have to restart the application and contact administrator by %put your email here%. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
+            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to %put your email here%',
         ],
     //OBJECTS
         sysAlert = EL('div');
@@ -389,6 +389,7 @@ String.prototype.matchAll = function(regexp) {
         window.ERR = ERR
         window.LSTNTAG = LSTNTAG
         window.LSTNCLS = LSTNCLS
+        window.MEM = MEM
         window.MAP = MAP
         window.MAPREP = MAPRET
         window.SCR = SCR
