@@ -15,6 +15,7 @@ var ONSCR,ASMBOOT,
             GETBYID('loading-state').innerHTML = 'Loading (' + Math.round((cur / total) * 100) +'%)'
         }
     },
+    adminMail = '%put your mail here%',
     soundEnabled = true;
 
 
@@ -77,8 +78,8 @@ String.prototype.matchAll = function(regexp) {
         systemMessages = [
             '<a href="javascript:ALRT.hide()" class="button alert-button">Ok</a>',
             '<a href="javascript:ALRT.hide()" class="button alert-button">Close</a>',
-            'You may have to restart the application and contact administrator by hello@artfield.me. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
-            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to hello@artfield.me',
+            'You may have to restart the application and contact administrator by ' + adminMail + '. But you can go further by clicking this button > <a href="#" class="button alert-button" id="sys-continue">Continue</a>',
+            'You need to hard reset the application by pressing Ctrl+F5. If the problem persists try to write to ' + adminMail,
         ],
     //OBJECTS
         sysAlert = EL('div');
@@ -298,7 +299,6 @@ String.prototype.matchAll = function(regexp) {
         }
 
         function IMGL(el){
-            D(el)
             if (el.getAttribute('src').indexOf('%') < 0){
                 el = XIMG(el)
             } else {
@@ -738,8 +738,6 @@ String.prototype.matchAll = function(regexp) {
             toR = 'if-' + key + '-not-' + val
             toS = 'if-' + key + '-' + val
 
-            D(GETBYCLS(toR,temp))
-
             MAP(GETBYCLS(toR,temp),function(e){
                 e.parentNode.removeChild(e)
             })
@@ -951,7 +949,11 @@ String.prototype.matchAll = function(regexp) {
     }
 
     function ERRDEF(errd,err){
-        GETBYTAG('span',errd)[0].innerHTML = err.data
+        if (err.data instanceof Array){
+            GETBYTAG('span',errd)[0].innerHTML = err.data[0]
+        } else {
+            GETBYTAG('span',errd)[0].innerHTML = err.data
+        }
         err.string = errd.innerHTML
         return err;
     }
