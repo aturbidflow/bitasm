@@ -5,7 +5,7 @@
  *
  * @file BITASM Framework
  * @author Artem Flo
- * @version 0.1.045
+ * @version 0.1.050
  *
  */
 
@@ -602,7 +602,7 @@ String.prototype.matchAll = function(regexp) {
 
     function TMPL(el,data,ximg){
         var addr = el.className.replace(/(template| |tmpl-)/g,''),
-            tmpl = MEM(ADR(addr,'2')),vars,out,
+            tmpl = MEM(ADR(addr,'2')),vars,out,key,
             top = '', parent = '';
 
         out = tmpl.innerHTML
@@ -615,8 +615,10 @@ String.prototype.matchAll = function(regexp) {
 
         if (tmpl){
             if (el.innerHTML == '$item'){
-                vars = data;
-            } else {
+                vars = data
+            } else if (el.getAttribute('data-vars')) {
+                vars = JSON.parse(el.getAttribute('data-vars'))
+            }else {
                 vars = GETDB(el.innerHTML)
                 parent = vars.parent
                 top = vars.top
@@ -624,6 +626,10 @@ String.prototype.matchAll = function(regexp) {
             }
 
             TMPLRPT(tmpl,vars)
+
+            for (key in vars){
+                tmpl.innerHTML = TMPLIF(tmpl.innerHTML,key,vars[key])
+            }
 
             tmpl.innerHTML = TMPLVAR(tmpl.innerHTML,'parent',parent)
             tmpl.innerHTML = TMPLVAR(tmpl.innerHTML,'top',top)
@@ -727,18 +733,24 @@ String.prototype.matchAll = function(regexp) {
             e.parentNode.removeChild(e)
         })
 
-        if (typeof val == 'number'){
-            toR = 'if-not-' + key + '-' + val
+        if (typeof val == 'number' || typeof val == 'string'){
+            toR = 'if-' + key + '-not-' + val
             toS = 'if-' + key + '-' + val
 
-            MAP(temp.querySelectorAll('[class^=if]'),function(e){
-                if (!e.className.match(toS)){
+            D(GETBYCLS(toR,temp))
+
+            MAP(GETBYCLS(toR,temp),function(e){
+                e.parentNode.removeChild(e)
+            })
+
+            MAP(temp.querySelectorAll('[class^=if-' + key + ']'),function(e){
+                if (!e.className.match(toS) && !e.className.match(new RegExp('if-' + key + '-not-' + '[^-]+'))){
                     e.parentNode.removeChild(e)
                 }
             })
         }
 
-        return temp.innerHTML.replace(new RegExp(' ?if(-not)?-' + key + ' ?','g'),'');
+        return temp.innerHTML.replace(new RegExp(' ?if(-not)?-' + key + '((-not)?-[^\\\'\\\"]+)? ?','g'),'');
     }
 
     function TMPLVAR(str,key,val){
