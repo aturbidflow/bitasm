@@ -15,7 +15,7 @@ var ONSCR,ASMBOOT,
             GETBYID('loading-state').innerHTML = 'Loading (' + Math.round((cur / total) * 100) +'%)'
         }
     },
-    adminMail = '%put your mail here%',
+    adminMail = adminMail || '%put your mail here%',
     soundEnabled = true;
 
 
