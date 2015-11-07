@@ -383,6 +383,7 @@ String.prototype.matchAll = function(regexp) {
 
     function EXPRT(){
         window.D = D
+        window.EL = EL
         window.GETBYCLS = GETBYCLS
         window.GETBYTAG = GETBYTAG
         window.GETBYID = GETBYID
@@ -634,6 +635,7 @@ String.prototype.matchAll = function(regexp) {
 
             tmpl.innerHTML = TMPLVAR(tmpl.innerHTML,'parent',parent)
             tmpl.innerHTML = TMPLVAR(tmpl.innerHTML,'top',top)
+            tmpl.innerHTML = TMPLVAR(tmpl.innerHTML,'timestamp',new Date().getTime())
 
             if (!(vars instanceof Array)){
                 var i;
