@@ -16,7 +16,7 @@ var asmDB = (function(){
                     [4,'or something other',1,true]
                 ],
                 two: [
-                    ['Simple', 'and complex', 'type of data table'],
+                    ['Simple', 'and complex', 'type of data tables'],
                     ['Sometimes could be','not filled.','Empty values will be filled with "false"']
                 ]
             }

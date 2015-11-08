@@ -33,6 +33,7 @@
 
 </head>
 <body>
+    <!-- This div (it can be not div) is the "screen" -->
     <div class="screen" id="addr0x00000000">
         <div class="intro-loader center">
             <img src="/images/loader.gif" width="96" height="96" />
@@ -41,15 +42,82 @@
     </div>
     <div class="memory">
         <!-- Screens (0x0)      -->
+            <!-- This screen will be shown on app loaded -->
             <div class="scr-index" id="addr0x00000001">
-                Hello world!
+                <div class="screen-content">
+                    Hello world!<br/><br/>
+                    <h2>Try:</h2>
+                    <ul>
+                        <!-- That is how routing works: put a "/#/" href to link --> 
+                        <li><a href="/#/template">Template test</a></li>
+                        <li><a href="/#/template/repeat">Repeat (simple) and routing test</a></li>
+                        <li><a href="/#/template/repeat/2">Repeat (complex) and routing test</a></li>
+                        <!-- Routing hack with dash inside. It will also work -->
+                        <li><a href="/#/template/repeat-2">Routing hack (take a look to href)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- This screen available by "/#/template" -->
+            <div class="scr-template" id="addr0x00000002">
+                <div class="screen-content">
+                    <!-- That is how templates works with data transfer by "data-vars" -->
+                    <div class="template tmpl-1" data-vars='{"a":1,"b":false,"c":"Test value"}'></div>
+                </div>
+            </div>
+
+            <!-- This screen available by "/#/template/repeat" -->
+            <div class="scr-template-repeat" id="addr0x00000003">
+                <div class="screen-content">
+                    <h1>Simple DB:</h1>
+                    <!-- This is how data transfer from asmDB works -->
+                    <div class="template tmpl-2">simple</div>
+                    <!-- This is how shareds work. Try to change 0x10000001 -->
+                    <div class="shared shr-1"></div>
+                </div>
+            </div>
+
+            <div class="scr-template-repeat-2" id="addr0x00000004">
+                <div class="screen-content">
+                    <h1>Complex DB:</h1>
+                    <!-- This is how data transfer from asmDB works -->
+                    <div class="template tmpl-2">complex/one</div>
+                    <!-- This is how shareds work. Try to change 0x10000001 -->
+                    <div class="template tmpl-3">complex/two</div>
+                </div>
             </div>
         <!-- /Screens           -->
 
         <!-- Shareds (0x1)      -->
+            <div id="addr0x10000001">
+                <br/>
+                It's a shared element that is the same everywhere it used.<br/>
+                <a href='/#/'>Back</a>
+            </div>
         <!-- /Shareds           -->
 
         <!-- Templates (0x2)    -->
+            <div id="addr0x20000001">
+                And this is a template. The "a" passed is "%a%", "b" passed is "%b%" and "c" is "%c%".
+                <!-- Shareds can be easily used in templates -->
+                <div class="shared shr-1"></div>
+            </div>
+            <div id="addr0x20000002">
+                <!-- That is how repeats works -->
+                <ol class="repeat">
+                    <li>%id%: <b>%title%</b> / %content% <span class="if-not-hidden">(VISIBLE)</span><span class="if-hidden">(HIDDEN)</span></li>
+                </ol>
+            </div>
+            <div id="addr0x20000003">
+                <ul class="repeat">
+                    <!-- That is how put-a-content works -->
+                    %template-4%
+                </ul>
+                <div class="shared shr-1"></div>
+            </div>
+            <div id="addr0x20000004">
+                <li>%id%: <b>%title%</b> / %content% <span class="if-not-hidden">(VISIBLE)</span><span class="if-hidden">(HIDDEN)</span></li>
+            </div>
         <!-- / Templates        -->
 
         <!-- Sounds (0x3)       -->
