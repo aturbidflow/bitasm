@@ -1,0 +1,175 @@
+
+body {
+	background-color: #000;
+	color: #c0c0c0;
+	font-family: 'zxspectrum',monospace;
+	font-weight: normal;
+	font-size: 43px;
+	font-smooth: never;
+	-webkit-font-smoothing : none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 43px;
+	font-weight: bolder;
+}
+
+a, a:active, a:visited {
+	color: #0000c0;
+	font-weight: bolder;
+}
+
+a:hover {
+	color: #c00000;
+}
+
+.bright a, .bright a:active, .bright a:visited {
+	color: #0000FF;
+}
+
+.bright a:hover {
+	color: #FF0000;
+}
+
+.screen {
+	width: 960px;
+	height: 720px;
+	padding: 0;
+	border: 1px solid #c0c0c0;
+	background-color: #c0c0c0;
+	color: #000;
+	border-top-width: 72px;
+	border-bottom-width: 72px;
+	border-left-width: 96px;
+	border-right-width: 96px;
+	margin-top: -72px;
+}
+
+.sysAlert {
+	padding: 24px;
+}
+
+
+/* Spectrum Colors */
+
+.bg-black {
+	background-color: #000;
+}
+
+.bg-blue {
+	background-color: #0000c0;
+}
+
+.bg-red {
+	background-color: #c00000;
+}
+
+.bg-purple {
+	background-color: #c000c0;
+}
+
+.bg-green {
+	background-color: #00c000;
+}
+
+.bg-teal {
+	background-color: #00c0c0;
+}
+
+.bg-yellow {
+	background-color: #c0c000;
+}
+
+.bg-white {
+	background-color: #c0c0c0;
+}
+
+.fg-black {
+	color: #000;
+}
+
+.fg-blue {
+	color: #0000c0;
+}
+
+.fg-red {
+	color: #c00000;
+}
+
+.fg-purple {
+	color: #c000c0;
+}
+
+.fg-green {
+	color: #00c000;
+}
+
+.fg-teal {
+	color: #00c0c0;
+}
+
+.fg-yellow {
+	color: #c0c000;
+}
+
+.fg-white {
+	color: #c0c0c0;
+}
+
+.bg-blue.bright {
+	background-color: #0000ff;
+}
+
+.bg-red.bright {
+	background-color: #ff0000;
+}
+
+.bg-purple.bright {
+	background-color: #ff00ff;
+}
+
+.bg-green.bright {
+	background-color: #00ff00;
+}
+
+.bg-teal.bright {
+	background-color: #00ffff;
+}
+
+.bg-yellow.bright {
+	background-color: #ffff00;
+}
+
+.bg-white.bright {
+	background-color: #fff;
+}
+
+.fg-blue.bright {
+	color: #0000ff;
+}
+
+.fg-red.bright {
+	color: #ff0000;
+}
+
+.fg-purple.bright {
+	color: #ff00ff;
+}
+
+.fg-green.bright {
+	color: #00ff00;
+}
+
+.fg-teal.bright {
+	color: #00ffff;
+}
+
+.fg-yellow.bright {
+	color: #ffff00;
+}
+
+.fg-white.bright {
+	color: #fff;
+}
+
+/* /Colors */
