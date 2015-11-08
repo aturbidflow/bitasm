@@ -5,7 +5,7 @@
  *
  * @file BITASM Framework
  * @author Artem Flo
- * @version 0.1.050
+ * @version 0.1.054
  *
  */
 
@@ -569,8 +569,12 @@ String.prototype.matchAll = function(regexp) {
             ximg = true;
         }
 
-        MAP(GETBYCLS('template',el),function(e){
+        MAP(GETBYCLS('template',el),function(e,i){
             TMPL(e,data,ximg)
+        })
+
+        MAP(GETBYCLS('template',el),function(e,i){
+            e.className = e.className.replace('template','templed')
         })
     }
 
@@ -644,8 +648,6 @@ String.prototype.matchAll = function(regexp) {
                 }
             }
 
-            el.className = el.className.replace('template','templed')
-
             if (tmpl.innerHTML.match(/ximg/g)){
                 D('Images added:', tmpl.innerHTML.match(/ximg/g).length)
             }
@@ -670,7 +672,6 @@ String.prototype.matchAll = function(regexp) {
         for (i = 0; i < repeats.length; i++){
             items = ''
             iTmpl = repeats[i].innerHTML;
-
             if (vars == undefined){
                 if (repeats[i].getAttribute('data') == undefined){
                     ERR('033',repeats[i].className)
@@ -1060,8 +1061,9 @@ String.prototype.matchAll = function(regexp) {
     }
 
     function MAP(arr,callback){
+        var i;
         if (arr){
-            for (var i = 0; i < arr.length; i++){
+            for (i = 0; i < arr.length;i++){
                 callback(arr[i],i,arr)
             }
         }
