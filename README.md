@@ -14,4 +14,4 @@ Now available:
 
 ## /extras
 Additional tools.
-* *mapper* - tool for create a map of you memory.
+* *mapper* - tool for create a map of your HTML
