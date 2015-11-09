@@ -11,6 +11,7 @@ Additional features
 Custom screens styles for different plamforms.
 Now available:
 * ZX Spectrum
+* Fullscreen
 
 ## /extras
 Additional tools.
