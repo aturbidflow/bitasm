@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+	<head>
+		<title>bitMAPPER - tool for mapping memory for bitASM</title>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				background-color: #eee;
+				color: #333;
+				font-family: Tahoma, Arial, sans-serif;
+				font-size: 16px;
+				padding: 50px;
+			}
+
+			h1 {
+				font-size: 24px;
+			}
+
+			textarea {
+				width: 100%;
+				height: 300px;
+			}
+
+			input {
+				background-color: #d5d5d5;
+				font-size: 24px;
+				padding: 5px 20px;
+				border: 1px solid #ccc;
+				min-width: 300px;
+				margin-top: 50px;
+			}
+
+			#output {
+				padding: 16px;
+				background-color: #f3f3f3;
+				border: 1px solid #d5d5d5;
+				border-radius: 10px;
+			}
+		</style>
+		<script type="text/javascript">
+			function RUN(){
+				var $input = document.getElementById('input'),
+					$output = document.getElementById('output'),
+					$shadow = document.createElement('div');
+
+				document.getElementById('proceed').addEventListener('click',function(e){
+					e.preventDefault()
+					PROCEED()
+				})
+
+				function PROCEED(){
+					$shadow.innerHTML = $input.value
+					var mems = $shadow.querySelectorAll('[id^=addr0x]')
+						,screens 	= []
+						,shareds 	= []
+						,templates 	= []
+						,sounds 	= []
+						,errors 	= []
+						,unks 		= []
+						,out = '&lt;!--======================== MAPPING ==============================='
+						,addr
+						,el,i;
+
+					for (i = 0; i < mems.length; i++){
+						el = mems[i]
+						addr = el.getAttribute('id').replace('addr0x','')
+
+						switch(addr[0]){
+							case '0':
+								screens.push(addr)
+								break
+							case '1':
+								shareds.push(addr)
+								break
+							case '2':
+								templates.push(addr)
+								break
+							case '3':
+								sounds.push(addr)
+								break
+							case '9':
+								errors.push(addr)
+								break
+							default:
+								unks.push(addr)
+						}
+					}
+
+					out = ADDBLOCK(out,'Screens 0x0',screens,ADDSCREEN)
+					out = ADDBLOCK(out,'Shareds 0x1',shareds,ADDDEF)
+					out = ADDBLOCK(out,'Templates 0x2',templates,ADDDEF)
+					out = ADDBLOCK(out,'Sounds 0x3',sounds,ADDSOUND)
+					out = ADDBLOCK(out,'Errors 0x9',errors,ADDDEF)
+					out = ADDBLOCK(out,'Unknown 0x[4-8]',unks,ADDDEF)
+
+					out = ADDLINE(out,'')
+					out = ADDLINE(out,'    ================================================================ --&gt;')
+
+					$output.innerHTML = out
+				}
+
+			    function D(){
+			        console.log.apply(console,arguments)
+			    }
+
+			    function OBJ(addr){
+			    	if (addr.indexOf('%') > -1){
+			    		$shadow.innerHTML = $shadow.innerHTML.replace(addr,addr.replace(/%/g,'_'))
+			    		addr = addr.replace(/%/g,'_')
+			    	}
+			    	return $shadow.querySelector('#addr0x' + addr)
+			    }
+
+			    function ADDBLOCK(str,title,arr,handler){
+			    	var i;
+
+			    	str = ADDLINE(str,'')
+			    	str = ADDLINE(str,'    ' + title + ':')
+
+			    	for (i = 0; i < arr.length; i++){
+			    		str = handler(str,arr[i])
+			    	}
+
+			    	return str
+			    }
+
+				function ADDSCREEN(str,scr){
+					var name = OBJ(scr).className.match(/scr[^ ]+/);
+
+					if (name){
+						name = name[0]
+						if (name !== 'screen'){
+							return ADDITEM(str,name.replace('scr-','').replace(/-/g,'\/'),scr)
+						} else if (name.trim() == '') {
+							return ADDITEM(str,'unnamed',scr)
+						} else {
+							return ADDITEM(str,'screen',scr)
+						}
+					} else {
+						return str
+					}
+				}
+
+				function ADDSOUND(str,snd){
+					var name = OBJ(snd).getAttribute('src').match(/[A-Za-z0-9-_]+\..+$/i)
+
+					if (name){
+						name = name[0]
+						if (name.trim() == '') {
+							return ADDITEM(str,'unnamed',snd)
+						} else {
+							return ADDITEM(str,name.replace(/(-|_)/g,' ').replace(/\..+/i,''),snd)
+						}
+					} else {
+						return str
+					}
+				}
+
+				function ADDDEF(str,def){
+					var name = OBJ(def).className.split(' ')
+
+					if (name){
+						name = name[0].replace('-',' ')
+						if (name.trim() == '') {
+							return ADDITEM(str,'unnamed',def)
+						} else {
+							return ADDITEM(str,name,def)
+						}
+					} else {
+						return str
+					}
+				}
+
+				function ADDITEM(str,name,scr){
+					var index;
+
+					if (scr.indexOf('%') > -1){
+						index = parseInt(scr.substr(1)) + scr.match(/%.+%/g).join('')
+					} else {
+						index = parseInt(scr.substr(1))
+					}
+					return ADDLINE(str,'        ' + FILLSPACE(name.toUpperCase(),30) + FILLSPACE(index,10) + FILLSPACE(' |',10) + '0x' + scr)
+				}
+
+				function ADDLINE(str,line){
+					return str + '\n' + line;
+				}
+
+				function FILLSPACE(str,length){
+					while (str.toString().length < length){
+						str += ' '
+					}
+					return str
+				}
+			}
+
+			document.addEventListener('DOMContentLoaded',RUN)
+		</script>
+	</head>
+	<body>
+		<div class="input-area">
+			<h1>Put your HTML code here:</h1>
+			<textarea id="input"></textarea>
+		</div>
+		<input type="button" id="proceed" value="Proceed" />
+		<div class="output-area">
+			<h1>You got:</h1>
+			<pre id="output"><i>Put your text in the field above.</i></pre>
+		</div>
+	</body>
+</html>
