@@ -45,6 +45,7 @@ String.prototype.matchAll = function(regexp) {
         currentLoadedElements = 0,
         loadTimer = 0,
         HALT = false,
+        ERROR = false,
     //COLLECTIONS
         previousScreen = [1],
         sysSoundsCollection = [
@@ -392,12 +393,13 @@ String.prototype.matchAll = function(regexp) {
         window.LSTNCLS = LSTNCLS
         window.MEM = MEM
         window.MAP = MAP
-        window.MAPREP = MAPRET
+        window.MAPRET = MAPRET
         window.SCR = SCR
         window.SCRBACK = SCRBACK
         window.SND = SND
         window.SYSSND = SYSSND
         window.WAIT = WAIT
+        window.ZRS = ZRS
         window.ALRT = ALRT.init()
     }
 
@@ -408,6 +410,15 @@ String.prototype.matchAll = function(regexp) {
     function SCR(addr){
         var scrData = MEM(ADR(addr,'0'));
 
+        if (HALT) return;
+
+        if (ERROR){
+            setTimeout(function(){
+                SCR(addr)
+            },100)
+            return;
+        }
+
         SCRSAV()
 
         if (scrData){
@@ -417,7 +428,7 @@ String.prototype.matchAll = function(regexp) {
         function SCRSHW(addr){
             $screen.innerHTML = scrData.innerHTML
             if (ONSCR){
-                ONSCR(ADR(addr,'0'))
+                ONSCR(parseInt(ADR(addr,'0')))
             }
             TMPLS($screen)
             SHRDS($screen)
@@ -907,17 +918,31 @@ String.prototype.matchAll = function(regexp) {
         document.body.className = document.body.className + ' critical'
         SYSSND(err.state)
         HALT = true
+        throw new Error("bitASM critical");
     }
 
     function ERRALRT(err){
+        ERROR = true
         if (err.data instanceof Array){
-            ALRT.show(err.bg,err.msg(),err.data[1],function(){
-                SYSSND(err.state)
-            })
+            ALRT.show(err.bg,err.msg(),
+                function(){
+                    ERROR = false
+                    err.data[1]()
+                },
+                function(){
+                    SYSSND(err.state)
+                }
+            )
         } else {
-            ALRT.show(err.bg,err.msg(),'',function(){
-                SYSSND(err.state)
-            })
+            ALRT.show(err.bg,err.msg(),
+                function(){
+                    ERROR = false
+                    err.data[1]()
+                },
+                function(){
+                    SYSSND(err.state)
+                }   
+            )
         }
     }
 

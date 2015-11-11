@@ -148,6 +148,10 @@ audio[src='']{
     float: right;
 }
 
+a.alert-button {
+    color: #fff;
+}
+
 .alert-button:hover {
     color: #fff;
 }
