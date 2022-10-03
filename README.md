@@ -16,3 +16,6 @@ Now available:
 ## /extras
 Additional tools.
 * *mapper* - tool for create a map of your HTML
+
+## More information
+Can be found in /website

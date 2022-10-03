@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+body,html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #000000;
+    color: #fff;
+    font-family: monospace;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+}
+
+ul {
+    padding-left: 0;
+    margin: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    list-style: none;
+}
+
+ol {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+.center {
+    left: 50%;
+    top: 50%;
+}
+
+.h-center {
+    left: 50%;
+}
+
+a,
+a:visited {
+    color: #0000ff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #00ffff;
+}
+
+audio[src='']{
+    display: none;
+}
+
+.memory {
+    display: none;
+}
+
+.screen {
+    margin: 0 auto;
+    padding: 3px;
+    width: 768px;
+    height: 720px;
+    background-color: #141313;
+    position: relative;
+    overflow: hidden;
+}
+
+.screen > * {
+    position: absolute;
+}
+
+.screen > .shared {
+    position: static;
+}
+
+.screen > .templed {
+    position: static;;
+}
+
+.screen > .templed > * {
+    position: absolute;
+}
+
+.screen .sysAlert * {
+    position: static;
+}
+
+.sysAlert {
+    padding: 12px 12px;
+    z-index: 9999;
+}
+
+.contains-hidden {
+    background: no-repeat center center;
+    text-align: center;
+}
+
+.contains-hidden .show-on-hover {
+    display: none;
+    position: static;
+}
+
+.contains-hidden:hover {
+    background-image: none;
+}
+
+.contains-hidden:hover .show-on-hover {
+    display: inline-block;
+}
+
+.button {
+    color: inherit;
+    text-decoration: none;
+    background-color: #004058;
+    border: 3px solid #fff;
+    display: inline-block;
+    padding: 6px 15px;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    height: 33px;
+    line-height: 15px;
+    text-transform: uppercase;
+}
+
+.button:hover {
+    color: #a4e8fc;
+}
+
+.alert-button {
+    background-color: transparent;
+    float: right;
+}
+
+.alert-button:hover {
+    color: #fff;
+}

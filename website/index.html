@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+<head>
+    <title>bitASM Framework</title>
+
+    <link rel="stylesheet" href="/styles/bit.css" />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <script type="text/javascript" src="/app/db.js"></script>
+    <script type="text/javascript" src="/app/bitasm.js"></script>
+
+    <script>
+        ASMBOOT = function(){
+            //This will run on media loaded
+        }
+        ONSCR = function(){
+            //This will run every time screen is changed
+        }
+    </script>
+    <!--======================== MAPPING ==============================
+
+        Screens 0x0:
+            SCREEN          0       |   0x00000000
+            INDEX           1       |   0x00000001
+
+        Shared Elements 0x1:
+
+        Templates 0x2:
+
+        Sound 0x3:
+
+        =============================================================== -->
+
+</head>
+<body>
+    <div class="screen" id="addr0x00000000">
+        <div class="intro-loader center">
+            <img src="/images/loader.gif" width="96" height="96" />
+        </div>
+        <h1 id="loading-state">Loading...</h1>
+    </div>
+    <div class="memory">
+        <!-- Screens (0x0)      -->
+            <div class="scr-index" id="addr0x00000001">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <h2>What is it?</h2>
+                    <p>bitASM is a JavaScript framework, that implements the Bit Design paradigm.</p>
+
+                    <h2>What for I can you use it?</h2>
+                    <p>By the default – for fun. Another option is to make a website with smell of old-school. </p>
+
+                    <h2>Should I know JavaScript to use bitASM?</h2>
+                    <p>Actually, it is not necessary. You can just define the right structure of HTML and include bitASM styles and script and here you go. See <a href="/#/start">“Start with bitASM”</a>.</p>
+
+                    <h2>Work with other frameworks</h2>
+                    <p>No, bitASM does not allow using other frameworks, even jQuery.</p>
+
+                    <h2>Going further:</h2>
+                    <ul>
+                        <li><a href="/#/how-it-works">How it works</a></li>
+                        <li><a href="/#/shareds">Shareds</a>, <a href="/#/templates">Templates</a> and <a href="/#/pager">Pager</a></li>
+                        <li><a href="/#/start">Start with bitASM</a></li>
+                        <li><a href="https://github.com/aturbidflow/bitasm/wiki/API" target="_blank">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-how-it-works" id="addr0x00000002">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> Basics | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | <a href="/#/templates">Templates</a> | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>How it works</h2>
+                    <p>BitASM takes all care about the routing and “memory” manipulations if you use a basic structure.</p>
+
+                    <h3>Basic structure</h3>
+                    <p>All data in bitASM app divided in parts:</p>
+
+                    <ul>
+                        <li>Screen and ROM – your HTML document.</li>
+                        <li>Code – bitASM JS and your app’s scripts</li>
+                        <li>Data – asmDB.js</li>
+                    </ul>
+                    <p>And, separately, your and bitASM css files.</p>
+
+                    <h3>Screens and routing</h3>
+                    <p>BitASM has a basic routing engine: window.location.hash is automatically mapped on screens. For this feature every screen should have a “scr-%url%” class. For example, url “/#/hello/screen” will be mapped to screen with a class “scr-hello-screen”. Slashes turn to dashes when searching for a screen element and vice versa.</p>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-addresses" id="addr0x00000003">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | Addresses | <a href="/#/shareds">Shareds</a> | <a href="/#/templates">Templates</a> | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>Addresses</h2>
+
+                    <p>In its turn HTML is divided to the screen and ROM. The screen div contains data visible to user right now. ROM – memory div, where all the screens and other elements are stored. Each element should have necessary attribute “id” type of “addr0xXXXXXXXX”. Screen div always has address 0x00000000 and correspondingly, its id is “addr0x00000000”.</p>
+
+                    <h3>Types of elements and its memory mapping:</h3>
+
+                    <ul>
+                        <li>Screens – 0x00000001 - 0x09999999</li>
+                        <li>Shared Elements – 0x10000000 - 0x19999999</li>
+                        <li>Templates – 0x20000000 - 0x29999999</li>
+                        <li>Sounds – 0x30000000 - 0x39999999</li>
+                        <li>Custom Errors – 0x90000000 - 0x99999999</li>
+                    </ul>
+                    <p>Addresses 0x40000000 – 0x89999999 are reserved for future. If you need this addresses – use them with caution.</p>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-shareds" id="addr0x00000004">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | Shareds | <a href="/#/templates">Templates</a> | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>Shareds</h2>
+                    <p>Shared elements called "shareds" are located in the addresses range 0x10000000 – 0x19999999. A shared is a simple piece of code that could be used in different screens. Implements code reusability and reduces the entropy.</p>
+                    <p>Using:</p>
+                    <code><pre>&lt;div class="shared shr-X"&gt;&lt;/div&gt;</pre></code>
+                    <p>where X is a shared’s address.</p>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-templates" id="addr0x00000005">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | Templates | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>Templates</h2>
+                    <p>BitASM contains simple, not so powerful but useful template engine. Templates are located in the addresses range 0x20000000 – 0x29999999. Variants of data transfer:</p>
+                    <code><pre>&lt;div class="template tmpl-X" data-vars='{"var":"value"}'&gt;%asmDB-path%&lt;/div&gt;</pre></code>
+                    <p>The data-vars attribute provides a data transfer by simple JSON string. Also you can put in the div an asmDB path (see <a href="https://github.com/aturbidflow/bitasm/wiki/asmDB" target="_blank">asmDB</a> section).</p>
+
+                    <h3>Variables</h3>
+                    <p>Variables are passed to a template through the ways described above. In the template the placeholders are described as a “percent pattern”: %varname%</p>
+                    <br/>
+                    <div class="template tmpl-0" data-vars='{"page":"templates","current":1,"prev":0,"next":2,"total":3}'></div>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-templates-2" id="addr0x00000006">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | Templates | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>Templates</h2>
+
+                    <h3>Repeats</h3>
+                    <code><pre>&lt;div class="repeat min-%min% max-%max%"&gt; … &lt;/div&gt;</pre></code>
+                    <p>Everything inside a tag with class “repeat” will be repeated by each element in an array passed through %asmDB-path%. Also repeats provide an additional variable %index% for the current item index.</p>
+                    <p>Classes “min-X” and “max-Y” provides a selection from the data given to a repeat where min &lt;= data &gt; max. Default is min-0 and max-[arr.length]</p>  
+
+                    <h3>IF-classes</h3>
+                    <p>There are two types of if-classes that could be used in templates.</p>
+                    <ol>
+                        <li>If-%var% and if-not-%var%. Use with Boolean values or to check the emptiness of the value.</li>
+                        <li>If-%var%-%val% and if-not-%var%-%val%. Use for comparing a variable with a specified value.</li>
+                    </ol>
+                    <p>Using:</p>
+                    <code><pre>&lt;li class="if-enabled"&gt; … &lt;/li&gt;&lt;li class="if-not-enabled"&gt; … &lt;/li&gt;</pre></code>
+                    <div class="template tmpl-0" data-vars='{"page":"templates","current":2,"prev":1,"next":3,"total":3}'></div>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-templates-3" id="addr0x00000007">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | Templates | <a href="/#/pager">Pager</a>
+                    </div>
+                    <h2>Templates</h2>
+
+                    <h3>Subtemplates</h3>
+                    <p>Subtemplates are a way to use templates inside repeats. You can use it like a template:</p>
+                    <code><pre>&lt;div class="subtemplate tmpl-X"&gt;%asmDB-path%&lt;/div&gt;</pre></code>
+                    <p>Or just put a content of another template without any preprocessing: %template-X%. Where X is always template address code.</p>
+
+                    <h3>Force template</h3>
+                    <p>By default templates are processed at screen assembly. But you can force templates processing on the app startup, for example to make a lot of the same screens with a different data.</p>
+                    <code><pre>&lt;div class="force-template"&gt; … &lt;/div&gt;</pre></code>
+                    <p>And put an element that uses a template inside this.</p>
+                    <br/>
+                    <div class="template tmpl-0" data-vars='{"page":"templates","current":3,"prev":2,"next":"last","total":3}'></div>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-pager" id="addr0x00000008">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | <a href="/#/templates">Templates</a> | Pager
+                    </div>
+                    <h2>Pager</h2>
+
+                    <p>A powerful system for dividing a screen with a lot of data into several screens. </p>
+                    <p>Just define a pager, define a screen inside and a template inside the screen and you will get a necessary number of screens at the outlet.</p>
+                    <p>Using:</p>
+                    <code><pre>
+&lt;div class="pager" data="%asmDB-path%" data-perpage="%itemsPerPage%"&gt;
+    &lt;div class="scr-some" id="addr0x000000XX"&gt;
+        &lt;div class="template tmpl-Y" data-vars="%JSON%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre></code>
+                    <p>Each new screen will have the id increased by 1.</p>
+                    <br/>
+                    <div class="template tmpl-0" data-vars='{"page":"pager","current":1,"prev":0,"next":2,"total":2}'></div>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-pager-2" id="addr0x00000009">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <div class="sub-menu">
+                        <span>How it works:</span> <a href="/#/how-it-works">Basics</a> | <a href="/#/addresses">Addresses</a> | <a href="/#/shareds">Shareds</a> | <a href="/#/templates">Templates</a> | Pager
+                    </div>
+                    <h2>Pager</h2>
+                    <p><b>Attention!</b> Templates in the pager are not fully functional because they can contain another templates inside. You can pass data to template only by data-vars.</p>
+
+                    <h3>Variables</h3>
+                    <p>Pager provides additional variables:</p>
+                    <ul>
+                        <li>%page% - current page index</li>
+                        <li>%prevPage% - previous page index</li>
+                        <li>%nextPage% - next page index. If next page is out of the array, value will be “last”</li>
+                        <li>%min% - lower (inclusive) border for selection (use in repeats)</li>
+                        <li>%max% - higher (non-inclusive) border for selection (use in repeats)</li>
+                    </ul>
+
+                    <br/>
+                    <div class="template tmpl-0" data-vars='{"page":"pager","current":2,"prev":1,"next":"last","total":2}'></div>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+            <div class="scr-start" id="addr0x00000010">
+                <div class="shared shr-1"></div>
+                <div class="screen-content">
+                    <h2>Start with bitASM</h2>
+                    <p>To start a bitASM app you just should use <a href="https://github.com/aturbidflow/bitasm" target="_blank">the boilerplate from repo</a>. No backend code is needed. </p>
+
+                    <h3>BitASM template has following sections:</h3>
+                    <ul>
+						<li>Usual html &lt;head&gt; section, where you are linking your styles and scripts</li>
+						<li>Commented mapping section is just a helper to find your addresses</li>
+						<li>&lt;div class="screen" id="addr0x00000000"&gt; is a screen block that shows current screen. By default is contains loading screen.</li>
+						<li>&lt;div class="memory"&gt; - everything inside this block will be hidden.</li>
+                    </ul>
+
+                    <h3>Restrictions</h3>
+                    <ul>
+						<li>Your app should contain at least one screen besides 0x0 – it should have address 0x00000001 and will be shown after media content loading.</li>
+						<li>Each image and audio inside the body will be preloaded. If you are using images for templates – use ximg tag instead (See <a href="https://github.com/aturbidflow/bitasm/wiki/API#ximg" target="_blank">xImg</a>). For audios just do not set preload attribute.</li>
+                    </ul>
+                </div>
+                <div class="shared shr-2"></div>
+            </div>
+        <!-- /Screens           -->
+
+        <!-- Shareds (0x1)      -->
+            <div class="header" id="addr0x10000001">
+                <img src="/images/logo.gif" style="float: left;margin-left: -36px;margin-top: -36px;" />
+                <h1><a href="/#">bitASM</a></h1>
+                <p class="desc">Most useless framework you ever tried.</p>
+                <a href="https://github.com/aturbidflow/bitasm" target="_blank" class="git">
+                    Download on github
+                </a>
+            </div>
+            <div class="footer" id="addr0x10000002">
+                <div class="footer">by <a href="http://flo.one" target="_blank">Artem Flo</a>, 2015</div>
+            </div>
+        <!-- /Shareds           -->
+
+        <!-- Templates (0x2)    -->
+            <div id="addr0x20000000">
+                <div class="pagination">
+                    <span class="if-current-not-1"><a href="/#/%page%/%prev%" class="if-current-not-2">Previous page</a><a href="/#/%page%" class="if-current-2">Previous page</a> &nbsp; | &nbsp; </span>Page %current% of %total%<span class="if-next-not-last"> &nbsp; | &nbsp; <a href="/#/%page%/%next%" class="if-next-not-last">Next page</a></span>
+                </div>
+            </div>
+        <!-- / Templates        -->
+
+        <!-- Sounds (0x3)       -->
+        <!-- /Sounds            -->
+     </div>
+</body>
+</html>
